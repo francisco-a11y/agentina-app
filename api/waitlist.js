@@ -11,6 +11,30 @@ import { Resend } from 'resend';
 const RATE_LIMIT_WINDOW_MS = 10_000; // 10s entre requests por IP
 const recentByIp = new Map(); // IP -> timestamp último request
 
+// Templates del email de notificación localizados por captured_locale.
+// El email lo lee Francisco — localizar le da contexto rápido del lead
+// (ej: si llegó en EN, probablemente conviene contactarlo en EN).
+const EMAIL_TEMPLATES = {
+  es: {
+    subject: (name, company) => `Nuevo lead: ${name} (${company})`,
+    title: 'Nuevo lead en la waitlist de Agentina',
+    labels: { name: 'Nombre', company: 'Empresa', email: 'Email', whatsapp: 'WhatsApp', linkedin: 'LinkedIn', locale: 'Idioma de captura', path: 'Path', date: 'Fecha' },
+    cta: 'Ver en el admin',
+  },
+  en: {
+    subject: (name, company) => `New lead: ${name} (${company})`,
+    title: 'New lead on the Agentina waitlist',
+    labels: { name: 'Name', company: 'Company', email: 'Email', whatsapp: 'WhatsApp', linkedin: 'LinkedIn', locale: 'Capture language', path: 'Path', date: 'Date' },
+    cta: 'View in admin',
+  },
+  pt: {
+    subject: (name, company) => `Novo lead: ${name} (${company})`,
+    title: 'Novo lead na waitlist da Agentina',
+    labels: { name: 'Nome', company: 'Empresa', email: 'Email', whatsapp: 'WhatsApp', linkedin: 'LinkedIn', locale: 'Idioma de captura', path: 'Path', date: 'Data' },
+    cta: 'Ver no admin',
+  },
+};
+
 function getClientIp(req) {
   // Vercel pone la IP real en x-forwarded-for (primer item antes de la coma)
   const xff = req.headers['x-forwarded-for'];
@@ -163,30 +187,35 @@ export default async function handler(req, res) {
   }
 
   // Notificación por email (no bloqueante — si falla el email, igual respondemos OK al usuario)
+  // Localizado por captured_locale para que el subject/labels coincidan con el idioma
+  // del lead — útil para contexto rápido al decidir cómo contactarlo.
   const resendKey = process.env.RESEND_API_KEY;
   const notifyEmail = process.env.NOTIFICATION_EMAIL;
   if (resendKey && notifyEmail) {
     try {
       const resend = new Resend(resendKey);
-      const adminUrl = `https://www.agentina.app/admin#${lead.id}`;
+      const adminUrl = `https://www.agentina.app/admin/#${lead.id}`;
+      const t = EMAIL_TEMPLATES[locale] || EMAIL_TEMPLATES.es;
+      const normalizedWa = normalizeWhatsapp(whatsapp);
+      const normalizedLi = normalizeLinkedinUrl(linkedin);
       await resend.emails.send({
-        from: 'Agentina <agentina@scalabl.com>',
+        from: 'Agentina <hola@agentina.app>',
         replyTo: 'francisco@scalabl.com',
         to: notifyEmail,
-        subject: `Nuevo lead: ${fullName} (${company})`,
+        subject: t.subject(fullName, company),
         html: `
-<h2>Nuevo lead en la waitlist de Agentina</h2>
+<h2>${t.title}</h2>
 <table cellpadding="6" style="border-collapse:collapse;font-family:system-ui,sans-serif">
-<tr><td><strong>Nombre</strong></td><td>${escapeHtml(fullName)}</td></tr>
-<tr><td><strong>Empresa</strong></td><td>${escapeHtml(company)}</td></tr>
-<tr><td><strong>Email</strong></td><td><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td></tr>
-<tr><td><strong>WhatsApp</strong></td><td><a href="https://wa.me/${normalizeWhatsapp(whatsapp).replace('+','')}">${escapeHtml(normalizeWhatsapp(whatsapp))}</a></td></tr>
-${linkedin ? `<tr><td><strong>LinkedIn</strong></td><td><a href="${escapeHtml(normalizeLinkedinUrl(linkedin))}">${escapeHtml(normalizeLinkedinUrl(linkedin))}</a></td></tr>` : ''}
-<tr><td><strong>Idioma captura</strong></td><td>${locale}</td></tr>
-<tr><td><strong>Path</strong></td><td>${escapeHtml(sourcePath || '/')}</td></tr>
-<tr><td><strong>Fecha</strong></td><td>${new Date(lead.created_at).toISOString()}</td></tr>
+<tr><td><strong>${t.labels.name}</strong></td><td>${escapeHtml(fullName)}</td></tr>
+<tr><td><strong>${t.labels.company}</strong></td><td>${escapeHtml(company)}</td></tr>
+<tr><td><strong>${t.labels.email}</strong></td><td><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td></tr>
+<tr><td><strong>${t.labels.whatsapp}</strong></td><td><a href="https://wa.me/${normalizedWa.replace('+','')}">${escapeHtml(normalizedWa)}</a></td></tr>
+${linkedin ? `<tr><td><strong>${t.labels.linkedin}</strong></td><td><a href="${escapeHtml(normalizedLi)}">${escapeHtml(normalizedLi)}</a></td></tr>` : ''}
+<tr><td><strong>${t.labels.locale}</strong></td><td>${locale.toUpperCase()}</td></tr>
+<tr><td><strong>${t.labels.path}</strong></td><td>${escapeHtml(sourcePath || '/')}</td></tr>
+<tr><td><strong>${t.labels.date}</strong></td><td>${new Date(lead.created_at).toISOString()}</td></tr>
 </table>
-<p><a href="${adminUrl}">Ver en el admin</a></p>
+<p><a href="${adminUrl}">${t.cta}</a></p>
         `.trim(),
       });
     } catch (emailError) {

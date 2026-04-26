@@ -1,7 +1,7 @@
 // GET /api/config
 // Devuelve config pública del admin (URL + anon key de Supabase).
 // Esto NO es secreto — la anon key está pensada para uso público y RLS protege los datos.
-// Lo exponemos vía endpoint en lugar de inline en HTML para mantener admin.html versionable
+// Lo exponemos vía endpoint en lugar de inline en HTML para mantener admin/index.html versionable
 // sin tener que reescribirlo cuando rotemos credenciales.
 
 export default function handler(req, res) {

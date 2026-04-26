@@ -440,7 +440,7 @@ $('login-form').addEventListener('submit', async (e) => {
   btn.textContent = 'Enviando…';
   const { error } = await supabase.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo: location.origin + '/admin.html' }
+    options: { emailRedirectTo: location.origin + '/admin/' }
   });
   btn.disabled = false;
   btn.textContent = 'Enviar magic link';
