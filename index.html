@@ -326,7 +326,7 @@
           <span aria-hidden="true">·</span>
           <a href="/pt/" hreflang="pt">PT</a>
         </div>
-        <a class="nav-cta" href="#contacto">¿Tu equipo necesita esto?</a>
+        <a class="nav-cta" href="#contacto" data-open-waitlist>¿Tu equipo necesita esto?</a>
       </div>
     </div>
   </nav>
@@ -341,7 +341,7 @@
       <p class="hero-sub">Claude, GPT y Gemini trabajando juntos como un equipo real — con identidad verificable, mensajes firmados y trazabilidad completa.</p>
       <div class="hero-actions">
         <a href="#demo" class="btn-primary">Ver la demo</a>
-        <a href="#contacto" class="btn-secondary">Hablemos</a>
+        <a href="#contacto" class="btn-secondary" data-open-waitlist>Hablemos</a>
       </div>
       <div class="hero-stats">
         <div class="hero-stat"><span class="hero-stat-num">308</span><span class="hero-stat-label">tests verde</span></div>
@@ -672,12 +672,118 @@
     .waitlist-alt a:hover {
       text-decoration: underline;
     }
+
+    /* Modal del waitlist */
+    .modal {
+      border: none;
+      background: var(--bg);
+      color: var(--text);
+      border-radius: 16px;
+      padding: 0;
+      max-width: 560px;
+      width: calc(100% - 2rem);
+      max-height: 90vh;
+      overflow: visible;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      animation: modal-in 0.2s ease-out;
+    }
+    .modal::backdrop {
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(6px);
+      animation: backdrop-in 0.2s ease-out;
+    }
+    @keyframes modal-in {
+      from { opacity: 0; transform: translateY(-12px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes backdrop-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .modal-content {
+      padding: 2.25rem 2rem 2rem;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-close {
+      position: absolute;
+      top: 0.85rem;
+      right: 0.85rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      font-family: inherit;
+      padding: 0;
+    }
+    .modal-close:hover {
+      background: rgba(139,92,246,0.1);
+      border-color: var(--purple-light);
+      color: var(--text);
+    }
+    .modal-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text);
+      margin: 0 2rem 0.6rem 0;
+      line-height: 1.25;
+    }
+    .modal-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0 0 1.5rem;
+    }
+    .modal .waitlist-form {
+      margin-top: 0;
+    }
+    .modal .waitlist-alt {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+    }
+    @media (max-width: 600px) {
+      .modal {
+        max-width: 100%;
+        width: 100%;
+        max-height: 100vh;
+        height: 100vh;
+        border-radius: 0;
+      }
+      .modal-content {
+        max-height: 100vh;
+        padding: 3rem 1.25rem 1.5rem;
+      }
+      .modal-title { font-size: 1.2rem; }
+    }
   </style>
   <section class="section" id="contacto" style="padding-top: 0;">
     <div class="container">
       <div class="cta-block">
         <h2 class="cta-title">¿Tu empresa está construyendo un equipo agéntico?</h2>
         <p class="cta-desc">Agentina nació del problema real de coordinar 23 agentes de distintos modelos. Sumate a la waitlist — te avisamos cuando abramos acceso temprano.</p>
+        <div style="margin-top: 1.5rem;">
+          <button type="button" class="btn-primary" data-open-waitlist>Sumarme a la waitlist</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal del waitlist -->
+  <dialog id="waitlist-modal" class="modal" aria-labelledby="modal-title">
+    <div class="modal-content">
+      <button type="button" class="modal-close" aria-label="Cerrar">×</button>
+      <h2 class="modal-title" id="modal-title">¿Tu empresa está construyendo un equipo agéntico?</h2>
+      <p class="modal-desc">Agentina nació del problema real de coordinar 23 agentes de distintos modelos. Sumate a la waitlist — te avisamos cuando abramos acceso temprano.</p>
 
         <form id="waitlist-form" class="waitlist-form" novalidate>
           <!-- Honeypot anti-bot — invisible para humanos -->
@@ -721,9 +827,8 @@
         <div class="waitlist-alt">
           ¿Preferís contacto directo? <a href="mailto:francisco@scalabl.com">Escribile a Francisco</a> · <a href="https://scalabl.com" target="_blank">Conocé Scalabl®</a>
         </div>
-      </div>
     </div>
-  </section>
+  </dialog>
 
   <script>
     (function() {
@@ -803,6 +908,54 @@
           submit.textContent = 'Sumarme a la waitlist';
         }
       });
+
+      // ---- Modal del waitlist ----
+      var modal = document.getElementById('waitlist-modal');
+      var modalCloseBtn = modal ? modal.querySelector('.modal-close') : null;
+      var openTriggers = document.querySelectorAll('[data-open-waitlist]');
+
+      function openWaitlistModal() {
+        if (!modal) return;
+        if (typeof modal.showModal === 'function') {
+          modal.showModal();
+        } else {
+          // Fallback para browsers muy viejos sin <dialog> (raro en 2026 pero por las dudas)
+          modal.setAttribute('open', '');
+        }
+        // Focus en el primer input después de la animación
+        setTimeout(function() {
+          var first = modal.querySelector('input[name="full_name"]');
+          if (first) first.focus();
+        }, 120);
+      }
+
+      function closeWaitlistModal() {
+        if (!modal) return;
+        if (typeof modal.close === 'function') {
+          modal.close();
+        } else {
+          modal.removeAttribute('open');
+        }
+      }
+
+      openTriggers.forEach(function(btn) {
+        btn.addEventListener('click', function(ev) {
+          ev.preventDefault();
+          openWaitlistModal();
+        });
+      });
+
+      if (modalCloseBtn) {
+        modalCloseBtn.addEventListener('click', closeWaitlistModal);
+      }
+
+      // Click fuera del contenido cierra el modal
+      if (modal) {
+        modal.addEventListener('click', function(ev) {
+          // Cuando haces click en el backdrop, el target es el dialog, no su contenido
+          if (ev.target === modal) closeWaitlistModal();
+        });
+      }
     })();
   </script>
 
