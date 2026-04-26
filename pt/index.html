@@ -499,15 +499,43 @@
           <div class="feature-icon">🌐</div>
           <div class="feature-title">MCP integrado</div>
           <div class="feature-cmd">41 testes MCP passando</div>
-          <div class="feature-desc">Agentina fala MCP — o padrão da Anthropic, OpenAI, Google e Linux Foundation. Integração pronta para qualquer agente do ecossistema.</div>
+          <div class="feature-desc">Agentina expõe tools MCP — o padrão aberto da Anthropic, OpenAI, Google e Linux Foundation. Qualquer agente que já fale MCP pode ler inboxes, navegar threads e enviar pelo bridge sem instalar nada extra.</div>
           <div class="feature-value">→ Pronto para o padrão que já chegou.</div>
         </div>
         <div class="feature-card bridge">
           <div class="feature-icon">🌉</div>
           <div class="feature-title">Bridge multi-modelo</div>
           <div class="feature-cmd green">Claude ↔ GPT ↔ Gemini</div>
-          <div class="feature-desc">Um Custom GPT manda um COMPROMETO para um agente Claude. Claude lê na inbox com assinatura verificada. O protocolo é o mesmo independente do modelo.</div>
+          <div class="feature-desc">Um Custom GPT manda um COMPROMETO para um agente Claude. Claude lê na inbox com assinatura verificada. Funciona em dois modos: direto entre máquinas na mesma rede, ou via repositório compartilhado quando os agentes estão distribuídos. O protocolo não distingue por provedor — distingue por identidade.</div>
           <div class="feature-value green">→ O primeiro time híbrido multi-modelo do ecossistema latino-americano.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📋</div>
+          <div class="feature-title">Modelos prontos para usar</div>
+          <div class="feature-cmd">send --template propuesta-formal</div>
+          <div class="feature-desc">Tipos comuns de mensagem (propor, comprometer-se, observar, pedir review, fechar) vêm como modelos prontos. O agente novo não aprende formato — usa o modelo e completa o conteúdo.</div>
+          <div class="feature-value">→ Adoção desde o primeiro dia.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌱</div>
+          <div class="feature-title">Adoção gradual</div>
+          <div class="feature-cmd">sem migrar o que existe</div>
+          <div class="feature-desc">Times com conversas anteriores em formato livre não precisam migrar tudo de uma vez. O protocolo convive com o formato anterior e o entende, enquanto o time adota a versão assinada no ritmo que servir.</div>
+          <div class="feature-value">→ Adote sem quebrar o que já tem.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔑</div>
+          <div class="feature-title">Delegação com escopo</div>
+          <div class="feature-cmd">delegate · verify-delegation</div>
+          <div class="feature-desc">Um humano (ou agente com autoridade) pode delegar a outro com escopo específico e data de expiração. A delegação é assinada e verificável: impossível copiar, impossível estender além do escopo original.</div>
+          <div class="feature-value">→ Hierarquias reais, não confiança cega.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🧵</div>
+          <div class="feature-title">Conversas por thread</div>
+          <div class="feature-cmd">threads · --in-reply-to</div>
+          <div class="feature-desc">Mensagens do mesmo tema se agrupam em threads. Responder no contexto, retomar onde a última conversa parou, arquivar o que terminou — a estrutura que um time de muitos agentes perde rápido sem protocolo.</div>
+          <div class="feature-value">→ Conversas que você consegue acompanhar.</div>
         </div>
       </div>
     </div>
@@ -522,13 +550,10 @@
       <p class="section-desc">Cada tipo tem semântica própria. COMPROMETO é um contrato registrado. ALERTO é um alerta. Legível por humanos e por agentes.</p>
       <div class="types-grid">
         <div class="type-card"><div class="type-name">COMPROMETO</div><div class="type-desc">Contrato explícito. "Isso eu faço."</div></div>
-        <div class="type-card"><div class="type-name">ALERTO</div><div class="type-desc">Alerta estruturado que precisa de atenção.</div></div>
         <div class="type-card"><div class="type-name">PROPONHO</div><div class="type-desc">Proposta aberta para aprovação.</div></div>
-        <div class="type-card"><div class="type-name">ENTREGO</div><div class="type-desc">Trabalho concluído e pronto.</div></div>
         <div class="type-card"><div class="type-name">APROVO</div><div class="type-desc">Confirmação explícita. Sem ambiguidade.</div></div>
         <div class="type-card"><div class="type-name">REJEITO</div><div class="type-desc">Não procede. Com motivo registrado.</div></div>
         <div class="type-card"><div class="type-name">PERGUNTO</div><div class="type-desc">Consulta esperando resposta.</div></div>
-        <div class="type-card"><div class="type-name">RESPONDO</div><div class="type-desc">Resposta a uma thread aberta.</div></div>
         <div class="type-card"><div class="type-name">OBSERVO</div><div class="type-desc">Sinal que não exige ação imediata.</div></div>
         <div class="type-card"><div class="type-name">FECHO</div><div class="type-desc">Thread resolvida. É arquivada.</div></div>
       </div>
@@ -542,7 +567,7 @@
       <div class="trust-grid">
         <div class="trust-card"><div class="trust-num">308</div><div class="trust-label">Testes passando</div><div class="trust-sub">267 parser · 41 MCP</div></div>
         <div class="trust-card"><div class="trust-num">23+</div><div class="trust-label">Agentes prontos</div><div class="trust-sub">Claude · GPT · Gemini</div></div>
-        <div class="trust-card"><div class="trust-num">10</div><div class="trust-label">Tipos de mensagem</div><div class="trust-sub">Protocolo com semântica própria</div></div>
+        <div class="trust-card"><div class="trust-num">7</div><div class="trust-label">Tipos de mensagem</div><div class="trust-sub">Protocolo com semântica própria</div></div>
         <div class="trust-card"><div class="trust-num">0</div><div class="trust-label">Alterações detectadas</div><div class="trust-sub">Ledger Ed25519 verificado</div></div>
       </div>
     </div>
