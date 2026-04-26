@@ -286,6 +286,28 @@
       .types-grid { grid-template-columns: repeat(2, 1fr); }
       .hero-stats { flex-direction: column; gap: 1rem; border-radius: 16px; padding: 1.25rem; }
       .hero-stat-sep { display: none; }
+      .section { padding: 3rem 0; }
+      .hero { padding: 4rem 0 3rem; }
+      .terminal-body {
+        padding: 1rem 1rem;
+        font-size: 0.7rem;
+        line-height: 1.6;
+        overflow-x: auto;
+      }
+      .terminal-body div {
+        white-space: nowrap;  /* mantener líneas de comando legibles, scroll horizontal natural */
+      }
+      .feature-card { padding: 1.25rem; }
+      .pq-card { padding: 1.4rem; }
+      .problem-card { padding: 1.5rem; }
+      .problem-metric { font-size: 2.2rem; }
+      .cta-block { padding: 2rem 1.25rem; }
+      .cta-title { font-size: clamp(1.2rem, 5vw, 1.6rem); }
+    }
+    @media (max-width: 480px) {
+      .nav-cta { display: none; }  /* CTA del nav ocultado — hay 3+ CTAs en el flujo de scroll */
+      .hero-actions { flex-direction: column; align-items: stretch; gap: 0.6rem; }
+      .hero-actions .btn-primary, .hero-actions .btn-secondary { text-align: center; }
     }
   </style>
 </head>
@@ -340,8 +362,8 @@
       <p class="hero-claim">El primer protocolo de comunicación inter-agente del ecosistema hispanohablante.</p>
       <p class="hero-sub">Claude, GPT y Gemini trabajando juntos como un equipo real — con identidad verificable, mensajes firmados y trazabilidad completa.</p>
       <div class="hero-actions">
-        <a href="#demo" class="btn-primary">Ver la demo</a>
-        <a href="#contacto" class="btn-secondary" data-open-waitlist>Hablemos</a>
+        <a href="#contacto" class="btn-primary" data-open-waitlist>Hablemos</a>
+        <a href="#demo" class="btn-secondary">Ver la demo</a>
       </div>
       <div class="hero-stats">
         <div class="hero-stat"><span class="hero-stat-num">308</span><span class="hero-stat-label">tests verde</span></div>
@@ -449,7 +471,7 @@
           <div class="feature-icon">📥</div>
           <div class="feature-title">Inbox inteligente</div>
           <div class="feature-cmd">inbox [agente] --unread --from [quien] --type [tipo]</div>
-          <div class="feature-desc">Filtrá por remitente, tipo o estado. Lo que tomaba 20 minutos toma segundos. Cada mensaje con firma verificada.</div>
+          <div class="feature-desc">Filtra por remitente, tipo o estado. Lo que tomaba 20 minutos toma segundos. Cada mensaje con firma verificada.</div>
           <div class="feature-value">→ Ningún mensaje importante se vuelve a perder.</div>
         </div>
         <div class="feature-card">
@@ -673,27 +695,28 @@
       text-decoration: underline;
     }
 
-    /* Modal del waitlist */
+    /* Modal del waitlist — compacto y centrado */
     .modal {
       border: none;
       background: var(--bg);
       color: var(--text);
-      border-radius: 16px;
+      border-radius: 14px;
       padding: 0;
-      max-width: 560px;
+      max-width: 420px;
       width: calc(100% - 2rem);
-      max-height: 90vh;
+      max-height: 88vh;
+      margin: auto;          /* centrado horizontal y vertical en navegadores modernos con dialog */
       overflow: visible;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-      animation: modal-in 0.2s ease-out;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(139,92,246,0.12);
+      animation: modal-in 0.18s ease-out;
     }
     .modal::backdrop {
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.72);
       backdrop-filter: blur(6px);
-      animation: backdrop-in 0.2s ease-out;
+      animation: backdrop-in 0.18s ease-out;
     }
     @keyframes modal-in {
-      from { opacity: 0; transform: translateY(-12px) scale(0.98); }
+      from { opacity: 0; transform: translateY(-10px) scale(0.985); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
     @keyframes backdrop-in {
@@ -701,23 +724,23 @@
       to { opacity: 1; }
     }
     .modal-content {
-      padding: 2.25rem 2rem 2rem;
+      padding: 1.6rem 1.4rem 1.4rem;
       position: relative;
-      max-height: 90vh;
+      max-height: 88vh;
       overflow-y: auto;
     }
     .modal-close {
       position: absolute;
-      top: 0.85rem;
-      right: 0.85rem;
+      top: 0.7rem;
+      right: 0.7rem;
       background: rgba(255,255,255,0.04);
       border: 1px solid var(--border);
       color: var(--text-muted);
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       cursor: pointer;
-      font-size: 1.1rem;
+      font-size: 1rem;
       line-height: 1;
       display: flex;
       align-items: center;
@@ -732,24 +755,50 @@
       color: var(--text);
     }
     .modal-title {
-      font-size: 1.4rem;
+      font-size: 1.15rem;
       font-weight: 800;
       color: var(--text);
-      margin: 0 2rem 0.6rem 0;
-      line-height: 1.25;
+      margin: 0 2rem 0.45rem 0;
+      line-height: 1.3;
     }
     .modal-desc {
-      font-size: 0.9rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0 0 1.5rem;
+      line-height: 1.55;
+      margin: 0 0 1.1rem;
     }
+    /* Form más compacto dentro del modal */
     .modal .waitlist-form {
       margin-top: 0;
+      gap: 0.7rem;
+    }
+    .modal .waitlist-row {
+      gap: 0.3rem;
+    }
+    .modal .waitlist-label {
+      font-size: 0.7rem;
+    }
+    .modal .waitlist-input {
+      padding: 0.55rem 0.75rem;
+      font-size: 0.88rem;
+    }
+    .modal .waitlist-error {
+      font-size: 0.72rem;
+    }
+    .modal .waitlist-submit {
+      margin-top: 0.3rem;
+      padding-top: 0.65rem;
+      padding-bottom: 0.65rem;
+    }
+    .modal .waitlist-status {
+      margin: 0.9rem 0 0;
+      padding: 0.7rem 0.9rem;
+      font-size: 0.82rem;
     }
     .modal .waitlist-alt {
-      margin-top: 1.5rem;
-      padding-top: 1.5rem;
+      margin-top: 1.2rem;
+      padding-top: 1.1rem;
+      font-size: 0.78rem;
     }
     @media (max-width: 600px) {
       .modal {
@@ -758,21 +807,35 @@
         max-height: 100vh;
         height: 100vh;
         border-radius: 0;
+        margin: 0;
       }
       .modal-content {
         max-height: 100vh;
-        padding: 3rem 1.25rem 1.5rem;
+        padding: 2.5rem 1.1rem 1.5rem;
       }
-      .modal-title { font-size: 1.2rem; }
+      .modal-title { font-size: 1.05rem; }
+    }
+    /* Botón 'Hablemos' destacado: variante visual con detalle de flecha */
+    .btn-primary[data-open-waitlist] {
+      box-shadow: 0 0 0 1px rgba(139,92,246,0.3), 0 4px 14px rgba(139,92,246,0.18);
+    }
+    .btn-primary[data-open-waitlist]::after {
+      content: '';
+      display: inline-block;
+      margin-left: 0.5em;
+      transition: transform 0.18s ease-out;
+    }
+    .btn-primary[data-open-waitlist]:hover::after {
+      transform: translateX(3px);
     }
   </style>
   <section class="section" id="contacto" style="padding-top: 0;">
     <div class="container">
       <div class="cta-block">
         <h2 class="cta-title">¿Tu empresa está construyendo un equipo agéntico?</h2>
-        <p class="cta-desc">Agentina nació del problema real de coordinar 23 agentes de distintos modelos. Sumate a la waitlist — te avisamos cuando abramos acceso temprano.</p>
+        <p class="cta-desc">Agentina nació del problema real de coordinar 23 agentes de distintos modelos. Únete a la waitlist — te avisamos cuando abramos acceso temprano.</p>
         <div style="margin-top: 1.5rem;">
-          <button type="button" class="btn-primary" data-open-waitlist>Sumarme a la waitlist</button>
+          <button type="button" class="btn-primary" data-open-waitlist>Unirme a la waitlist</button>
         </div>
       </div>
     </div>
@@ -783,7 +846,7 @@
     <div class="modal-content">
       <button type="button" class="modal-close" aria-label="Cerrar">×</button>
       <h2 class="modal-title" id="modal-title">¿Tu empresa está construyendo un equipo agéntico?</h2>
-      <p class="modal-desc">Agentina nació del problema real de coordinar 23 agentes de distintos modelos. Sumate a la waitlist — te avisamos cuando abramos acceso temprano.</p>
+      <p class="modal-desc">Agentina nació del problema real de coordinar 23 agentes de distintos modelos. Únete a la waitlist — te avisamos cuando abramos acceso temprano.</p>
 
         <form id="waitlist-form" class="waitlist-form" novalidate>
           <!-- Honeypot anti-bot — invisible para humanos -->
@@ -819,13 +882,13 @@
             <div class="waitlist-error" data-error="linkedin_url"></div>
           </div>
 
-          <button type="submit" class="btn-primary waitlist-submit" id="wl-submit">Sumarme a la waitlist</button>
+          <button type="submit" class="btn-primary waitlist-submit" id="wl-submit">Unirme a la waitlist</button>
 
           <div id="wl-status" class="waitlist-status" style="display:none;"></div>
         </form>
 
         <div class="waitlist-alt">
-          ¿Preferís contacto directo? <a href="mailto:francisco@scalabl.com">Escribile a Francisco</a> · <a href="https://scalabl.com" target="_blank">Conocé Scalabl®</a>
+          ¿Prefieres contacto directo? <a href="mailto:francisco@scalabl.com">Escríbele a Francisco</a> · <a href="https://scalabl.com" target="_blank">Conoce Scalabl®</a>
         </div>
     </div>
   </dialog>
@@ -893,19 +956,19 @@
             form.reset();
           } else if (res.status === 400 && body.fields) {
             Object.keys(body.fields).forEach(function(k) { setFieldError(k, body.fields[k]); });
-            showError('Revisá los datos marcados arriba.');
+            showError('Revisa los datos marcados arriba.');
           } else if (res.status === 409) {
             showSuccess(body.message || 'Ya estás en la waitlist. Te avisamos cuando abramos.');
           } else if (res.status === 429) {
-            showError(body.message || 'Demasiadas solicitudes. Esperá unos segundos.');
+            showError(body.message || 'Demasiadas solicitudes. Espera unos segundos.');
           } else {
-            showError('Algo no salió bien. Probá de nuevo en un momento, o escribinos a francisco@scalabl.com');
+            showError('Algo no salió bien. Prueba de nuevo en un momento, o escríbenos a francisco@scalabl.com');
           }
         } catch (err) {
-          showError('No pudimos conectar con el servidor. Verificá tu conexión y probá de nuevo.');
+          showError('No pudimos conectar con el servidor. Verifica tu conexión y prueba de nuevo.');
         } finally {
           submit.disabled = false;
-          submit.textContent = 'Sumarme a la waitlist';
+          submit.textContent = 'Unirme a la waitlist';
         }
       });
 
