@@ -170,7 +170,7 @@ export default async function handler(req, res) {
       const resend = new Resend(resendKey);
       const adminUrl = `https://www.agentina.app/admin#${lead.id}`;
       await resend.emails.send({
-        from: 'Agentina <agentina@scalabl.com>',
+        from: 'Agentina <hola@agentina.app>',
         replyTo: 'francisco@scalabl.com',
         to: notifyEmail,
         subject: `Nuevo lead: ${fullName} (${company})`,
