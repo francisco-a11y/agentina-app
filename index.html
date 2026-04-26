@@ -521,19 +521,240 @@
   </section>
 
 
-  <!-- CTA -->
+  <!-- Waitlist -->
+  <style>
+    .waitlist-form {
+      max-width: 520px;
+      margin: 2rem auto 0;
+      display: grid;
+      gap: 1rem;
+      text-align: left;
+    }
+    .waitlist-row {
+      display: grid;
+      gap: 0.4rem;
+    }
+    .waitlist-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .waitlist-label .opt {
+      color: var(--text-dim);
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+      margin-left: 0.4rem;
+    }
+    .waitlist-input {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 0.9rem;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: border-color 0.15s, background 0.15s;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .waitlist-input:focus {
+      outline: none;
+      border-color: var(--purple-light);
+      background: rgba(139,92,246,0.06);
+    }
+    .waitlist-input::placeholder {
+      color: var(--text-dim);
+    }
+    .waitlist-error {
+      font-size: 0.8rem;
+      color: #f87171;
+      margin-top: 0.2rem;
+      min-height: 1em;
+    }
+    .waitlist-submit {
+      margin-top: 0.5rem;
+      width: 100%;
+    }
+    .waitlist-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .waitlist-honeypot {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .waitlist-status {
+      margin: 1.2rem 0 0;
+      padding: 1rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .waitlist-status.success {
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.3);
+      color: #86efac;
+    }
+    .waitlist-status.error {
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.3);
+      color: #fca5a5;
+    }
+    .waitlist-alt {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+    .waitlist-alt a {
+      color: var(--purple-light);
+      text-decoration: none;
+    }
+    .waitlist-alt a:hover {
+      text-decoration: underline;
+    }
+  </style>
   <section class="section" id="contacto" style="padding-top: 0;">
     <div class="container">
       <div class="cta-block">
         <h2 class="cta-title">¿Tu empresa está construyendo un equipo agéntico?</h2>
-        <p class="cta-desc">Agentina nació del problema real de coordinar 23 agentes de distintos modelos. Si tu empresa está en ese camino — o quiere estarlo — hablemos.</p>
-        <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-          <a href="https://scalabl.com" class="btn-primary" target="_blank">Conocer Scalabl®</a>
-          <a href="mailto:francisco@scalabl.com" class="btn-secondary">Escribir a Francisco</a>
+        <p class="cta-desc">Agentina nació del problema real de coordinar 23 agentes de distintos modelos. Sumate a la waitlist — te avisamos cuando abramos acceso temprano.</p>
+
+        <form id="waitlist-form" class="waitlist-form" novalidate>
+          <!-- Honeypot anti-bot — invisible para humanos -->
+          <input type="text" name="website" class="waitlist-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+          <div class="waitlist-row">
+            <label class="waitlist-label" for="wl-name">Nombre completo</label>
+            <input class="waitlist-input" type="text" id="wl-name" name="full_name" required maxlength="120" autocomplete="name">
+            <div class="waitlist-error" data-error="full_name"></div>
+          </div>
+
+          <div class="waitlist-row">
+            <label class="waitlist-label" for="wl-company">Empresa</label>
+            <input class="waitlist-input" type="text" id="wl-company" name="company" required maxlength="120" autocomplete="organization">
+            <div class="waitlist-error" data-error="company"></div>
+          </div>
+
+          <div class="waitlist-row">
+            <label class="waitlist-label" for="wl-email">Email</label>
+            <input class="waitlist-input" type="email" id="wl-email" name="email" required maxlength="254" autocomplete="email" inputmode="email">
+            <div class="waitlist-error" data-error="email"></div>
+          </div>
+
+          <div class="waitlist-row">
+            <label class="waitlist-label" for="wl-whatsapp">WhatsApp <span class="opt">(con código de país, ej: +5491165432100)</span></label>
+            <input class="waitlist-input" type="tel" id="wl-whatsapp" name="whatsapp" required maxlength="30" autocomplete="tel" inputmode="tel" placeholder="+5491165432100">
+            <div class="waitlist-error" data-error="whatsapp"></div>
+          </div>
+
+          <div class="waitlist-row">
+            <label class="waitlist-label" for="wl-linkedin">LinkedIn <span class="opt">(opcional)</span></label>
+            <input class="waitlist-input" type="text" id="wl-linkedin" name="linkedin_url" maxlength="500" autocomplete="off" placeholder="linkedin.com/in/tu-perfil">
+            <div class="waitlist-error" data-error="linkedin_url"></div>
+          </div>
+
+          <button type="submit" class="btn-primary waitlist-submit" id="wl-submit">Sumarme a la waitlist</button>
+
+          <div id="wl-status" class="waitlist-status" style="display:none;"></div>
+        </form>
+
+        <div class="waitlist-alt">
+          ¿Preferís contacto directo? <a href="mailto:francisco@scalabl.com">Escribile a Francisco</a> · <a href="https://scalabl.com" target="_blank">Conocé Scalabl®</a>
         </div>
       </div>
     </div>
   </section>
+
+  <script>
+    (function() {
+      var form = document.getElementById('waitlist-form');
+      var submit = document.getElementById('wl-submit');
+      var status = document.getElementById('wl-status');
+      var errorNodes = form.querySelectorAll('[data-error]');
+
+      function clearErrors() {
+        errorNodes.forEach(function(n) { n.textContent = ''; });
+        status.style.display = 'none';
+        status.className = 'waitlist-status';
+        status.textContent = '';
+      }
+
+      function showError(message) {
+        status.style.display = 'block';
+        status.className = 'waitlist-status error';
+        status.textContent = message;
+      }
+
+      function showSuccess(message) {
+        status.style.display = 'block';
+        status.className = 'waitlist-status success';
+        status.textContent = message;
+      }
+
+      function setFieldError(field, message) {
+        var node = form.querySelector('[data-error="' + field + '"]');
+        if (node) node.textContent = message;
+      }
+
+      form.addEventListener('submit', async function(ev) {
+        ev.preventDefault();
+        clearErrors();
+
+        var data = new FormData(form);
+        var payload = {
+          full_name: data.get('full_name'),
+          company: data.get('company'),
+          email: data.get('email'),
+          whatsapp: data.get('whatsapp'),
+          linkedin_url: data.get('linkedin_url') || null,
+          website: data.get('website') || '',  // honeypot
+          captured_locale: 'es',
+          source_path: location.pathname + location.search,
+        };
+
+        submit.disabled = true;
+        submit.textContent = 'Enviando…';
+
+        try {
+          var res = await fetch('/api/waitlist', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          var body = await res.json().catch(function() { return {}; });
+
+          if (res.ok) {
+            showSuccess('¡Listo! Estás en la waitlist. Te avisamos cuando abramos acceso temprano.');
+            form.reset();
+          } else if (res.status === 400 && body.fields) {
+            Object.keys(body.fields).forEach(function(k) { setFieldError(k, body.fields[k]); });
+            showError('Revisá los datos marcados arriba.');
+          } else if (res.status === 409) {
+            showSuccess(body.message || 'Ya estás en la waitlist. Te avisamos cuando abramos.');
+          } else if (res.status === 429) {
+            showError(body.message || 'Demasiadas solicitudes. Esperá unos segundos.');
+          } else {
+            showError('Algo no salió bien. Probá de nuevo en un momento, o escribinos a francisco@scalabl.com');
+          }
+        } catch (err) {
+          showError('No pudimos conectar con el servidor. Verificá tu conexión y probá de nuevo.');
+        } finally {
+          submit.disabled = false;
+          submit.textContent = 'Sumarme a la waitlist';
+        }
+      });
+    })();
+  </script>
 
 
   <footer>

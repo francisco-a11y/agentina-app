@@ -1,0 +1,14 @@
+{
+  "name": "agentina-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sitio público de agentina.app — landing + waitlist + admin de leads",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "resend": "^4.0.0"
+  }
+}
