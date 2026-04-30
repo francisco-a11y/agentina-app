@@ -15,18 +15,5 @@
         { "key": "Cache-Control", "value": "public, max-age=3600, s-maxage=3600" }
       ]
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/",
-      "has": [
-        {
-          "type": "header",
-          "key": "user-agent",
-          "value": "(?i).*(GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|anthropic-ai|Claude-Web|PerplexityBot|Perplexity-User|Google-Extended|Bytespider|cohere-ai|meta-externalagent|Meta-ExternalAgent|FacebookBot|Applebot-Extended|YouBot|Diffbot|Bingbot.*BingPreview).*"
-        }
-      ],
-      "destination": "/agents/index.html"
-    }
   ]
 }
