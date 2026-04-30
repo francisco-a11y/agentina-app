@@ -31,4 +31,10 @@
     <xhtml:link rel="alternate" hreflang="pt" href="https://www.agentina.app/pt/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.agentina.app/"/>
   </url>
+  <url>
+    <loc>https://www.agentina.app/agents/</loc>
+    <lastmod>2026-04-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

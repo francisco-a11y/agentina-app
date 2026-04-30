@@ -3,4 +3,9 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 
+# Recursos para agentes IA / LLMs
+# Versión nativa para agentes: https://www.agentina.app/agents/
+# Resumen estructurado: https://www.agentina.app/llms.txt
+# Versión expandida: https://www.agentina.app/llms-full.txt
+
 Sitemap: https://www.agentina.app/sitemap.xml
