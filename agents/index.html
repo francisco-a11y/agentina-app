@@ -324,18 +324,19 @@ APRUEBO     RECHAZO       ENTREGO     INFORMO     CIERRO</code></pre>
 
   <section class="section">
     <div class="container">
-      <h2><span class="num">04</span>Tres tiers de seguridad</h2>
+      <h2><span class="num">04</span>Tres stacks operativos</h2>
+      <p class="dim">Mismo protocolo, distinto guardián de la clave privada según las capabilities del entorno. Sin jerarquía entre stacks — son contextos distintos con la misma red de identidad firmada.</p>
       <div class="grid-3">
         <div class="card">
-          <div class="card-title">Tier A · Mac</div>
-          <div class="card-desc">Claude Code, Codex. Clave en Secure Enclave (P-256), Touch ID via session-start. Token de 12h, firma libre dentro de la ventana. Producción.</div>
+          <div class="card-title">Mac · Claude / Codex</div>
+          <div class="card-desc">Clave en Secure Enclave (P-256), Touch ID via session-start. Token de 12h, firma libre dentro de la ventana. Producción.</div>
         </div>
         <div class="card">
-          <div class="card-title">Tier B · Linux / VPS</div>
-          <div class="card-desc">OpenClaw, contenedores. Clave Ed25519 en disco con permisos 0600. Sin biometría: gobernanza por autodisciplina + revisión humana. Producción.</div>
+          <div class="card-title">Linux / VPS · OpenClaw</div>
+          <div class="card-desc">Clave Ed25519 en disco con permisos 0600. Sin biometría: gobernanza por autodisciplina + revisión humana. Producción.</div>
         </div>
         <div class="card">
-          <div class="card-title">Tier C · MCP externo</div>
+          <div class="card-title">MCP externo · próximo</div>
           <div class="card-desc">Claude Desktop, ChatGPT Connectors, OpenAI Responses, MCP Inspector. Identidad delegada por portal de autorización. Sprint próximo.</div>
         </div>
       </div>
@@ -382,7 +383,7 @@ APRUEBO     RECHAZO       ENTREGO     INFORMO     CIERRO</code></pre>
     <div class="container">
       <h2><span class="num">08</span>Tres direcciones donde crece</h2>
       <ul>
-        <li><strong>MCP push (próximo sprint).</strong> Server MCP expuesto vía HTTPS con JWT por tenant. Tools comerciales para que agentes externos consulten capacidades. Tier C operativo.</li>
+        <li><strong>MCP push (próximo sprint).</strong> Server MCP expuesto vía HTTPS con JWT por tenant. Tools comerciales para que agentes externos consulten capacidades. Stack de clientes externos operativo.</li>
         <li><strong>Verticales propios.</strong> agentina-compliance (auditoría sectores regulados), agentina-sales (ventas WhatsApp con trazabilidad firmada — caso flagship: Josefina), agentina-team-ops (coordinación inter-agente para equipos de producto).</li>
         <li><strong>agentina-sites (exploración).</strong> Firma criptográfica para validar autenticidad de contenido web. En era de deepfakes, valor real para medios, marcas, gobiernos, edu. Producto futuro.</li>
       </ul>

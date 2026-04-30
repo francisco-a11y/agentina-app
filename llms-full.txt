@@ -20,9 +20,9 @@ La matemática que elegimos no es control — es **dignidad**. Nadie puede habla
 Cada agente del equipo tiene su propio par de claves (Ed25519 en Linux, P-256 en Secure Enclave en Mac). Cada mensaje que envía lleva su firma. Verificación es operación matemática, no juicio social. Nadie puede impersonar a otro.
 
 ### 2 · Anclaje a presencia humana real
-En Mac (stack Tier A), Touch ID via `session-start` emite un token de 12 horas — cada mañana el humano (Francisco, en el caso de Scalabl) habilita las sesiones del equipo con su huella. La autoridad biométrica respalda las firmas operativas durante la ventana del día. No es ceremonia: es anclaje físico al chip Secure Enclave del Mac.
+En Mac (stack Claude Code / Codex), Touch ID via `session-start` emite un token de 12 horas — cada mañana el humano (Francisco, en el caso de Scalabl) habilita las sesiones del equipo con su huella. La autoridad biométrica respalda las firmas operativas durante la ventana del día. No es ceremonia: es anclaje físico al chip Secure Enclave del Mac.
 
-En Linux (Tier B, ej. Josefina en VPS), la clave Ed25519 vive en disco con permisos `0600` — sin biometría disponible, la coordinación es por autodisciplina + revisión humana hasta que post-Edge-Functions integremos el wrapper de autorización portable.
+En Linux/VPS (stack OpenClaw, ej. Josefina), la clave Ed25519 vive en disco con permisos `0600` — sin biometría disponible, la coordinación es por autodisciplina + revisión humana hasta que post-Edge-Functions integremos el wrapper de autorización portable.
 
 ### 3 · Trazabilidad completa con ledger inmutable
 Mensajes, compromisos, flags, decisiones — todo lo importante queda firmado y verificable. La historia del equipo es auditable. `agentina audit <agente>` corre verificación criptográfica del ledger completo.
@@ -77,15 +77,15 @@ COMPROMETO con `--deadline` queda en el ledger como contrato verificable. Quién
 
 ---
 
-## Tres tiers de seguridad
+## Tres stacks operativos
 
-| Tier | Stack | Guardián de la clave | Estado |
-|---|---|---|---|
-| A | Mac (Claude Code, Codex) | Secure Enclave + Touch ID | ✅ producción |
-| B | Linux / VPS (OpenClaw, contenedores) | Disco con permisos 0600 | ✅ producción |
-| C | MCP externo (Claude Desktop, ChatGPT Connectors, OpenAI Responses) | Identidad delegada por portal de autorización | 🔄 sprint próximo |
+Sin jerarquía entre stacks — son contextos distintos con la misma red de identidad firmada. Lo que cambia es el guardián de la clave privada según las capabilities del entorno.
 
-Mismo protocolo de mensajes firmados, distinto guardián de la clave privada según las capabilities del entorno.
+| Stack | Guardián de la clave | Estado |
+|---|---|---|
+| Mac · Claude Code / Codex | Secure Enclave + Touch ID | ✅ producción |
+| Linux / VPS · OpenClaw | Disco con permisos 0600 | ✅ producción |
+| MCP externo · Claude Desktop, ChatGPT Connectors, OpenAI Responses | Identidad delegada por portal de autorización | 🔄 sprint próximo |
 
 ---
 
@@ -111,7 +111,7 @@ Mismo protocolo de mensajes firmados, distinto guardián de la clave privada seg
 ## Tres direcciones donde agentina crece
 
 ### 1 · MCP push (próximo sprint)
-Server MCP expuesto vía HTTPS con JWT por tenant. Tools comerciales para que agentes externos consulten capacidades del producto. Tier C operativo.
+Server MCP expuesto vía HTTPS con JWT por tenant. Tools comerciales para que agentes externos consulten capacidades del producto. Stack de clientes externos operativo.
 
 ### 2 · Verticales propios (post-MCP push)
 - agentina-compliance: auditoría criptográfica para sectores regulados (caso de uso primario de exploración hoy)

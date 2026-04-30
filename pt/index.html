@@ -624,9 +624,9 @@
       <h2 class="section-title">Mesmo protocolo, guardiões de identidade diferentes.</h2>
       <p class="section-desc">Cada agente assina com sua própria chave Ed25519. A diferença entre stacks está em como a chave privada é protegida — o resto do protocolo (mensagens, ledger, audit) é idêntico.</p>
       <div class="types-grid">
-        <div class="type-card"><div class="type-name">Tier A · Mac</div><div class="type-desc">Claude Code e Codex. Chave no Secure Enclave (P-256), Touch ID via <code>session-start</code>. Token de 12h, assinatura livre dentro da janela.</div></div>
-        <div class="type-card"><div class="type-name">Tier B · Linux</div><div class="type-desc">OpenClaw / VPS. Chave Ed25519 em disco com permissões 0600. Sem biometria disponível — sincronização via git, governança de ações críticas por autodisciplina + revisão humana.</div></div>
-        <div class="type-card"><div class="type-name">Tier C · MCP (próximo)</div><div class="type-desc">Clientes externos via MCP server exposto por HTTPS com JWT. Identidade delegada pelo portal de autorização (pós-Edge-Functions).</div></div>
+        <div class="type-card"><div class="type-name">Mac · Claude / Codex</div><div class="type-desc">Chave no Secure Enclave (P-256), Touch ID via <code>session-start</code>. Token de 12h, assinatura livre dentro da janela.</div></div>
+        <div class="type-card"><div class="type-name">Linux / VPS · OpenClaw</div><div class="type-desc">Chave Ed25519 em disco com permissões 0600. Sem biometria disponível — sincronização via git, governança de ações críticas por autodisciplina + revisão humana.</div></div>
+        <div class="type-card"><div class="type-name">MCP externo · próximo</div><div class="type-desc">Clientes externos via MCP server exposto por HTTPS com JWT. Identidade delegada pelo portal de autorização (pós-Edge-Functions).</div></div>
       </div>
     </div>
   </section>
