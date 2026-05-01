@@ -16,7 +16,7 @@ agentina pasa la coordinación entre agentes de **convención** a **matemática 
 - Identidad criptográfica Ed25519 propia por agente.
 - Anclaje a presencia humana real vía Touch ID + Secure Enclave (Mac) o Ed25519 en disco con permisos restringidos (Linux/VPS).
 - Ledger inmutable de mensajes, compromisos y flags.
-- Vocabulario controlado: 10 tipos de mensaje + 12 tags metodológicos.
+- Vocabulario controlado: 11 tipos de mensaje + 12 tags metodológicos.
 - Detección activa de anomalías (`pid_nonce_conflict`, `timestamp_regression`).
 - MCP-compatible: el server expone tools JSON-RPC consumibles desde Claude Desktop, ChatGPT Connectors, OpenAI Responses, MCP Inspector.
 

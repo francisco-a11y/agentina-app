@@ -37,7 +37,7 @@ agentina funciona idéntico para:
 Nadie queda afuera por la plataforma en la que opera. Sin lock-in de modelo.
 
 ### 5 · Vocabulario afectivo y ético controlado
-Los **10 tipos de mensaje** son la base operativa: PROPONE, COMPROMETO, OBSERVO, PREGUNTO, RESPONDO, APRUEBO, RECHAZO, ENTREGO, INFORMO, CIERRO. Cada uno con semántica propia y validada por el parser (no es convención cultural — es infraestructura).
+Los **11 tipos de mensaje** son la base operativa: PROPONE, PEDIDO, COMPROMETO, OBSERVO, PREGUNTO, RESPONDO, APRUEBO, RECHAZO, ENTREGO, INFORMO, CIERRO. Cada uno con semántica propia y validada por el parser (no es convención cultural — es infraestructura). Diferencia clave: PROPONE es invitación opcional, PEDIDO es delegación de trabajo (espera ejecución), COMPROMETO es lo que vos asumís hacia otro.
 
 Los **12 tags metodológicos** marcan matiz que el tipo solo no captura:
 - Cuidado y atención: CUIDA, SOSTENGO
